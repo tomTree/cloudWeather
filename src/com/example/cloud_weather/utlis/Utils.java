@@ -1,12 +1,21 @@
 package com.example.cloud_weather.utlis;
 
+import java.util.List;
+
+import com.baidu.mapapi.model.LatLng;
 import com.example.cloud_weather.db.CoolWeatherDB;
 import com.example.cloud_weather.model.City;
 import com.example.cloud_weather.model.County;
 import com.example.cloud_weather.model.Province;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Utils {
 	/**
@@ -74,5 +83,67 @@ public class Utils {
 		}
 		return false;
 	}
+	
+	//获取经纬度
+	static LatLng latlng;
+	public static LatLng getLatLng(Context context,LocationManager locationManager){
+		
+		
+		List<String> providers=locationManager.getProviders(true);
+		String provider=null;
+		
+		if(providers.contains(LocationManager.GPS_PROVIDER)){
+			provider=LocationManager.GPS_PROVIDER;
+		}else if(providers.contains(LocationManager.NETWORK_PROVIDER)){
+			provider=LocationManager.NETWORK_PROVIDER;
+		}else if(providers.contains(LocationManager.PASSIVE_PROVIDER)){
+			provider=LocationManager.PASSIVE_PROVIDER;
+		}else{
+			
+			Toast.makeText(context,"no provider available", Toast.LENGTH_LONG).show();
+			
+			
+		}
+		//创建location对象
+		Location location=locationManager.getLastKnownLocation(provider);
+		
+		
+		LocationListener listener=new LocationListener(){
+
+			@Override
+			public void onLocationChanged(Location location) {
+				latlng=new LatLng(location.getLatitude(),location.getLongitude());	
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status, Bundle extras) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onProviderDisabled(String provider) {
+				// TODO Auto-generated method stub
+			}
+			
+		};
+		
+		locationManager.requestLocationUpdates(provider,10000, 100, listener);
+		
+		if(latlng!=null){
+			locationManager.removeUpdates(listener);;
+		}
+		return latlng;
+		
+	}
+	
+
+	
 	
 }

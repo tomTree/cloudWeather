@@ -25,9 +25,13 @@ public class HttpUtils {
 				try {
 					URL url=new URL(address);
 					connection=(HttpURLConnection) url.openConnection();
+					connection.setRequestProperty("apikey","FVOnl3OlZCZOFAZa8k5uWs0CabiCd5YR");
 					connection.setRequestMethod("GET");
 					connection.setConnectTimeout(8000);
 					connection.setReadTimeout(8000);
+					//设置自己的apiKey
+					
+					
 					InputStream in=connection.getInputStream();
 					
 					BufferedReader reader=new BufferedReader(new InputStreamReader(in,"utf-8"));

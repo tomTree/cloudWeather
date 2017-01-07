@@ -1,5 +1,12 @@
 package com.example.cloud_weather.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.cloud_weather.utlis.HttpCallBackListener;
+import com.example.cloud_weather.utlis.HttpUtils;
+
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -21,8 +28,7 @@ public class CoolWeatherOpenHelper extends SQLiteOpenHelper{
 			+ "county_id integer primary key autoincrement,"
 			+ "county_name text,county_code text,city_id integer)";
 	
-	
-	
+	private static final String CREATE_CITYCODE="create table citycodes(name,code)";
 	
 	
 	
@@ -37,9 +43,15 @@ public class CoolWeatherOpenHelper extends SQLiteOpenHelper{
 		db.execSQL(CREATE_PROVINCES);
 		db.execSQL(CREATE_CITIES);
 		db.execSQL(CREATE_COUNTIES);
+		db.execSQL(CREATE_CITYCODE);
+		
 
 		
 	}
+	
+
+	
+	
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
