@@ -30,6 +30,7 @@ public class CoolWeatherOpenHelper extends SQLiteOpenHelper{
 	
 	private static final String CREATE_CITYCODE="create table citycodes(name,code)";
 	
+	private static final String CREATE_IMAGE="create table imagetables(image_id integer primary key autoincrement,imagefile text)";
 	
 	
 	
@@ -44,6 +45,7 @@ public class CoolWeatherOpenHelper extends SQLiteOpenHelper{
 		db.execSQL(CREATE_CITIES);
 		db.execSQL(CREATE_COUNTIES);
 		db.execSQL(CREATE_CITYCODE);
+		db.execSQL(CREATE_IMAGE);
 		
 
 		

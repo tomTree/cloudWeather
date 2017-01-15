@@ -174,9 +174,27 @@ public class CoolWeatherDB {
 		}
 	}
 	
+	//¥Ê∑≈Õº∆¨
+	public void addImage(String imagefile){
+		ContentValues values=new ContentValues();
+		values.put("imagefile", imagefile);
+		db.insert("imagetables", null, values);
+		values.clear();
+	}
 	
-	
-
+	public String getImgaeFile(String imageName){
+		
+		Cursor cursor=db.query("imagetables", null, "imagefile=?",new String[]{imageName}, null, null, null);
+		
+		if(cursor.moveToFirst()==false){
+			return null;
+			
+		}
+		String imageFile=cursor.getString(cursor.getColumnIndex("imagefile"));
+		
+		return imageFile;
+		
+	}
 	
 	
 	

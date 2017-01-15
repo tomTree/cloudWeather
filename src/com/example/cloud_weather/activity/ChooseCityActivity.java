@@ -14,6 +14,7 @@ import com.example.cloud_weather.utlis.Utils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -80,6 +81,15 @@ public class ChooseCityActivity extends Activity{
 					selectedCity=cities.get(position);
 					queryCounties();
 					titletext.setText(selectedCity.getName());
+				}else if(currentLevel==COUNTY_LEVEL){
+					
+					String cName=listData.get(position);
+					Intent intent=new Intent();
+					intent.setClass(ChooseCityActivity.this, ShowWeatherInfoActivity.class);
+					intent.putExtra("from_chooseActivity", cName);
+					startActivity(intent);
+					intent.removeExtra("from_chooseActivity");
+					finish();
 				}
 				
 			}
